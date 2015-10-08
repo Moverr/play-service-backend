@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class BackendDao {
 
+
     public Friend selectOneFriend(Long id, boolean exception, long delay) {
         Delay.mockCrashAndDelay(exception, delay);
         EntityManager em = JPA.em("default");
@@ -38,7 +39,7 @@ public class BackendDao {
         em.getTransaction().commit();
         em.close();
 
-        return true;
+        return true; //TODO not so good
     }
 
     public boolean deleteOneFriend(long id, boolean exception, long delay) {
@@ -51,7 +52,5 @@ public class BackendDao {
         em.close();
         return changed > 0;
     }
-
-
 
 }
