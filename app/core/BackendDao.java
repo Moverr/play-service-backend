@@ -18,8 +18,9 @@ public class BackendDao {
         EntityManager em = JPA.em("default");
         Query q = em.createQuery("select f from Friend f where f.id=?1", Friend.class);
         q.setParameter(1, id);
+        Friend result = (Friend) q.getSingleResult();
         em.close();
-        return (Friend) q.getSingleResult();
+        return result;
     }
 
     public List<Friend> selectAllFriends(boolean exception, long delay) {
