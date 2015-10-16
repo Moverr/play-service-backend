@@ -19,8 +19,12 @@ public class BackendDao {
      * with Play we can take
      *
      * -> JPA : Functional-JPA -> at the end also blocking, but lazy
+     *      https://github.com/davidmoten/functional-jpa
      * -> reactive streams mongo db or something else -> for streams Play dont have Java API
+     *      http://www.reactive-streams.org/
      * -> stream -> Observable (RxJava) -> Enumerators and Iteratees
+     *      http://bryangilbert.com/blog/2013/10/22/rxPlay-making-iteratees-and-observables-play-nice/
+     *      http://francois.farquet.com/Observables_for_Play.pdf
      */
 
 
