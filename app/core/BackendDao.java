@@ -12,6 +12,17 @@ import java.util.List;
  */
 public class BackendDao {
 
+    /**
+     *
+     * Why blocking ?
+     *
+     * with Play we can take
+     *
+     * -> JPA : Functional-JPA -> at the end also blocking, but lazy
+     * -> reactive streams mongo db or something else -> for streams Play dont have Java API
+     * -> stream -> Observable (RxJava) -> Enumerators and Iteratees
+     */
+
 
     public Friend selectOneFriend(Long id, boolean exception, long delay) {
         Delay.mockCrashAndDelay(exception, delay);
