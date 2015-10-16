@@ -4,6 +4,7 @@ import models.Friend;
 import play.db.jpa.JPA;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -33,7 +34,15 @@ public class BackendDao {
         EntityManager em = JPA.em("default");
         Query q = em.createQuery("select f from Friend f where f.id=?1", Friend.class);
         q.setParameter(1, id);
-        Friend result = (Friend) q.getSingleResult();
+
+        // its really "awesome" for JPA hibernate that if i dont have result
+        // it punch to my face one big exception"
+        Friend result = null;
+        try {
+            result = (Friend) q.getSingleResult();
+        } catch (NoResultException ex) {
+            // nothing needed here
+        }
         em.close();
         return result;
     }

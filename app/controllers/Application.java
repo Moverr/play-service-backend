@@ -23,6 +23,7 @@ public class Application extends Controller {
 
     public F.Promise<Result> selectOneFriend(long id) {
         return F.Promise.promise(() -> dao.selectOneFriend(id, false, 0)) // non-blocking with F.Promise.promise
+                .map((x) -> x == null ? "" : x)
                 .map(Json::toJson)
                 .map(jsonResponse -> (Result) ok(jsonResponse))
                 .recover(t -> badRequest(t.getMessage() + "\n"));
