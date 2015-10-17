@@ -9,3 +9,7 @@ GET           /backend/friends           @controllers.Application.selectAllFrien
 PUT           /backend/friend/:id        @controllers.Application.addOneFriend(id : Long)
 # update one !
 
+
+
+
+GET           /showRunProperties         @controllers.Application.showRunProperties()

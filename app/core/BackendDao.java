@@ -8,6 +8,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 
+import static core.PlayPropertiesHelper.*;
+
 /**
  * Created by nue on 6.10.2015.
  */
@@ -29,8 +31,8 @@ public class BackendDao {
      */
 
 
-    public Friend selectOneFriend(Long id, boolean exception, long delay) {
-        Delay.mockCrashAndDelay(exception, delay);
+    public Friend selectOneFriend(Long id) {
+        Delay.mockCrashAndDelay(getSelectOneException(), getSelectOneDelay());
         EntityManager em = JPA.em("default");
         Query q = em.createQuery("select f from Friend f where f.id=?1", Friend.class);
         q.setParameter(1, id);
@@ -47,8 +49,8 @@ public class BackendDao {
         return result;
     }
 
-    public List<Friend> selectAllFriends(boolean exception, long delay) {
-        Delay.mockCrashAndDelay(exception, delay);
+    public List<Friend> selectAllFriends() {
+        Delay.mockCrashAndDelay(getSelectAllException(), getSelectAllDelay());
         EntityManager em = JPA.em("default");
         List<Friend> result = em.createQuery("SELECT e FROM Friend e").getResultList();
         em.close();
@@ -56,8 +58,8 @@ public class BackendDao {
     }
 
 
-    public boolean addOneFriend(Friend friend, boolean exception, long delay) {
-        Delay.mockCrashAndDelay(exception, delay);
+    public boolean addOneFriend(Friend friend) {
+        Delay.mockCrashAndDelay(getAddOneException(), getAddOneDelay());
         EntityManager em = JPA.em("default");
         em.getTransaction().begin();
         em.persist(friend);
@@ -67,7 +69,7 @@ public class BackendDao {
         return true; //TODO not so good
     }
 
-    public boolean deleteOneFriend(long id, boolean exception, long delay) {
+    public boolean deleteOneFriend(long id) {
         EntityManager em = JPA.em("default");
         em.getTransaction().begin();
         Query q = em.createQuery("delete from Friend f where f.id=?1");
