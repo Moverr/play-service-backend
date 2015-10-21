@@ -29,7 +29,7 @@ import static core.PlayPropertiesHelper.*;
 public class Application extends Controller {
 
     private static final ExecutionContext jpaExecContext;
-    
+
     static {
         jpaExecContext = HttpExecution.fromThread(
                 Akka.system().dispatchers().lookup("jpa-execution-context"));
@@ -40,10 +40,10 @@ public class Application extends Controller {
 
     public F.Promise<Result> selectOneFriend(long id) {
         return F.Promise.promise(() -> dao.selectOneFriend(id) ,jpaExecContext) // non-blocking with F.Promise.promise
-                .map((x) -> x == null ? "" : x)
-                .map(Json::toJson)
-                .map(jsonResponse -> (Result) ok(jsonResponse))
-                .recover(t -> badRequest(t.getMessage() + "\n"));
+                .map((x) -> x == null ? "" : x, jpaExecContext)
+                .map(Json::toJson, jpaExecContext)
+                .map(jsonResponse -> (Result) ok(jsonResponse), jpaExecContext)
+                .recover(t -> badRequest(t.getMessage() + "\n"), jpaExecContext);
     }
 
     public F.Promise<Result> selectAllFriends() {
