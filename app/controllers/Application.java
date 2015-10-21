@@ -28,11 +28,11 @@ import static core.PlayPropertiesHelper.*;
  */
 public class Application extends Controller {
 
-    private static ExecutionContext jpaExecContext;
+    private static final ExecutionContext jpaExecContext;
+    
     static {
-        final MessageDispatcher jpa =
-                Akka.system().dispatchers().lookup("jpa-execution-context");
-        jpaExecContext = HttpExecution.fromThread(jpa);
+        jpaExecContext = HttpExecution.fromThread(
+                Akka.system().dispatchers().lookup("jpa-execution-context"));
     }
 
     @Inject
