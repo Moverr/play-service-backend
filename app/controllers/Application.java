@@ -1,19 +1,26 @@
 package controllers;
 
 
+import akka.dispatch.MessageDispatcher;
 import com.google.inject.Inject;
 import core.BackendDao;
 import core.PlayPropertiesHelper;
 import models.Friend;
+import play.core.j.HttpExecutionContext;
+import play.libs.Akka;
 import play.libs.F;
+import play.libs.HttpExecution;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.concurrent.ExecutionContext;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static core.PlayPropertiesHelper.*;
+
+
 
 /**
  * simple rest CRUD standalone service / Play! app / non-blocking, functional
@@ -21,11 +28,18 @@ import static core.PlayPropertiesHelper.*;
  */
 public class Application extends Controller {
 
+    private static ExecutionContext jpaExecContext;
+    static {
+        final MessageDispatcher jpa =
+                Akka.system().dispatchers().lookup("jpa-execution-context");
+        jpaExecContext = HttpExecution.fromThread(jpa);
+    }
+
     @Inject
     private BackendDao dao;
 
     public F.Promise<Result> selectOneFriend(long id) {
-        return F.Promise.promise(() -> dao.selectOneFriend(id)) // non-blocking with F.Promise.promise
+        return F.Promise.promise(() -> dao.selectOneFriend(id) ,jpaExecContext) // non-blocking with F.Promise.promise
                 .map((x) -> x == null ? "" : x)
                 .map(Json::toJson)
                 .map(jsonResponse -> (Result) ok(jsonResponse))
@@ -33,7 +47,7 @@ public class Application extends Controller {
     }
 
     public F.Promise<Result> selectAllFriends() {
-        return F.Promise.promise(() -> dao.selectAllFriends()) // non-blocking with F.Promise.promise
+        return F.Promise.promise(() -> dao.selectAllFriends(),jpaExecContext) // non-blocking with F.Promise.promise
                 .map(Json::toJson)
                 .map(jsonResponse -> (Result) ok(jsonResponse))
                 .recover(t -> badRequest(t.getMessage()  + "\n"));
@@ -42,6 +56,7 @@ public class Application extends Controller {
     public F.Promise<Result> addOneFriend(long id) {
         return F.Promise.promise(
                 () -> dao.addOneFriend(new Friend(id)) // Promise<Boolean>
+                ,jpaExecContext
         ) // non-blocking with F.Promise.promise
                 .map(x -> {
                     Map<String, Boolean> data = new HashMap<>();
@@ -57,6 +72,7 @@ public class Application extends Controller {
     public F.Promise<Result> deleteOneFriend(long id) {
         return F.Promise.promise(
                 () -> dao.deleteOneFriend(id) // Promise<Boolean>
+                ,jpaExecContext
         ) // non-blocking with F.Promise.promise
                 .map(x -> {
                     Map<String, Boolean> data = new HashMap<>();
