@@ -33,7 +33,7 @@ public class BackendDao {
 
     public Friend selectOneFriend(Long id) {
         Delay.mockCrashAndDelay(getSelectOneException(), getSelectOneDelay());
-        EntityManager em = JPA.em("default");
+        EntityManager em = JPA.em("micro_play_example");
         Query q = em.createQuery("select f from Friend f where f.id=?1", Friend.class);
         q.setParameter(1, id);
 
@@ -51,7 +51,7 @@ public class BackendDao {
 
     public List<Friend> selectAllFriends() {
         Delay.mockCrashAndDelay(getSelectAllException(), getSelectAllDelay());
-        EntityManager em = JPA.em("default");
+        EntityManager em = JPA.em("micro_play_example");
         List<Friend> result = em.createQuery("SELECT e FROM Friend e").getResultList();
         em.close();
         return result;
@@ -60,7 +60,7 @@ public class BackendDao {
 
     public boolean addOneFriend(Friend friend) {
         Delay.mockCrashAndDelay(getAddOneException(), getAddOneDelay());
-        EntityManager em = JPA.em("default");
+        EntityManager em = JPA.em("micro_play_example");
         em.getTransaction().begin();
         em.persist(friend);
         em.getTransaction().commit();
@@ -70,7 +70,7 @@ public class BackendDao {
     }
 
     public boolean deleteOneFriend(long id) {
-        EntityManager em = JPA.em("default");
+        EntityManager em = JPA.em("micro_play_example");
         em.getTransaction().begin();
         Query q = em.createQuery("delete from Friend f where f.id=?1");
         q.setParameter(1, id);
