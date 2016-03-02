@@ -5,7 +5,7 @@ CREATE TABLE Friend (
     name varchar(255),
     surname varchar(255),
     PRIMARY KEY (id)
-)
+);
 
 
 
@@ -13,4 +13,4 @@ CREATE TABLE Friend (
 
 # --- !Downs
 
-DROP TABLE Friend
+DROP TABLE Friend;
