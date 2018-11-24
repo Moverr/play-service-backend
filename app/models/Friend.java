@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import java.util.Random;
 
 /**
- * Created by nue on 6.10.2015.
+ * Created by peterszatmary on 6.10.2015.
  */
 @Entity
 public class Friend {

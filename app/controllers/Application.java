@@ -1,12 +1,8 @@
 package controllers;
 
-
-import akka.dispatch.MessageDispatcher;
 import com.google.inject.Inject;
 import core.BackendDao;
-import core.PlayPropertiesHelper;
 import models.Friend;
-import play.core.j.HttpExecutionContext;
 import play.libs.Akka;
 import play.libs.F;
 import play.libs.HttpExecution;
@@ -19,8 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static core.PlayPropertiesHelper.*;
-
-
 
 /**
  * simple rest CRUD standalone service / Play! app / non-blocking, functional
@@ -84,12 +78,6 @@ public class Application extends Controller {
                 .recover(t -> badRequest(t.getMessage() + "\n"));
     }
 
-
-
-
-
-
-
     public Result showRunProperties() {
         return ok(
                 "{\n" +
@@ -104,5 +92,4 @@ public class Application extends Controller {
                         "}"
         );
     }
-
 }

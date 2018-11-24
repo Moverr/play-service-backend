@@ -7,10 +7,6 @@ CREATE TABLE Friend (
     PRIMARY KEY (id)
 );
 
-
-
-
-
 # --- !Downs
 
 DROP TABLE Friend;

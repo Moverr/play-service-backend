@@ -5,7 +5,7 @@ import play.Play;
 import java.util.Map;
 
 /**
- * Created by nue on 6.10.2015.
+ * Created by peterszatmary on 6.10.2015.
  */
 public final class PlayPropertiesHelper {
 

@@ -1,6 +1,5 @@
 # --- !Ups
 
-
 INSERT INTO Friend (id, name, surname) VALUES (1, 'Peter', 'First');
 INSERT INTO Friend (id, name, surname) VALUES (2, 'Peter', 'Second');
 INSERT INTO Friend (id, name, surname) VALUES (3, 'Peter', 'Third');

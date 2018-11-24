@@ -12,7 +12,9 @@ libraryDependencies ++= Seq(
   javaWs,
   "mysql" % "mysql-connector-java" % "5.1.35",
   "org.hibernate" % "hibernate-core" % "4.2.3.Final",
-  "org.hibernate" % "hibernate-entitymanager" % "4.2.3.Final"
+  "org.hibernate" % "hibernate-entitymanager" % "4.2.3.Final",
+  "junit" % "junit" % "4.12" % Test,
+  "com.novocode" % "junit-interface" % "0.11" % Test exclude("junit", "junit-dep")
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
